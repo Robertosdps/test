@@ -4,8 +4,4 @@ jobs:
   list:
     runs-on: ubuntu-latest
     steps:
-      - name: Get repos
-        run: |
-          curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-          https://api.github.com/user/repos?per_page=100 > repos.json
-          python3 -c "import json; r=json.load(open('repos.json')); print('\n'.join([x['name'] for x in sorted(r, key=lambda y: y['name'])]))"
+      - run: curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" https://api.github.com/user/repos?per_page=100
