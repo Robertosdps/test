@@ -1,7 +1,5 @@
 name: List Repos
-
 on: [workflow_dispatch]
-
 jobs:
   list:
     runs-on: ubuntu-latest
@@ -9,5 +7,5 @@ jobs:
       - name: Get repos
         run: |
           curl -s -H "Authorization: token ${{ secrets.GITHUB_TOKEN }}" \
-            https://api.github.com/user/repos?per_page=100 | \
-            python3 -c "import sys, json; repos = json.load(sys.stdin); print('\n'.join([f\"{r['name']} ({r['stargazers_count']} ⭐)\" for r in sorted(repos, key=lambda x: x['name'])]))"
+          https://api.github.com/user/repos?per_page=100 > repos.json
+          python3 -c "import json; r=json.load(open('repos.json')); print('\n'.join([x['name'] for x in sorted(r, key=lambda y: y['name'])]))"
